@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 15 15 15;
+  --foreground: 255 255 255;
+  --card: 26 26 26;
+  --card-foreground: 255 255 255;
+  --primary: 212 175 55;
+  --primary-foreground: 15 15 15;
+  --muted: 38 38 38;
+  --muted-foreground: 163 163 163;
+  --border: 51 51 51;
+  --destructive: 220 38 38;
+  --success: 34 197 94;
+}
+
+@layer base {
+  body {
+    @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold px-4 py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-[rgb(var(--muted))] text-[rgb(var(--foreground))] font-medium px-4 py-3 rounded-lg hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-[rgb(var(--muted))] border border-[rgb(var(--border))] rounded-lg text-[rgb(var(--foreground))] placeholder-[rgb(var(--muted-foreground))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent;
+  }
+
+  .card {
+    @apply bg-[rgb(var(--card))] rounded-xl p-5 border border-[rgb(var(--border))];
+  }
+}
