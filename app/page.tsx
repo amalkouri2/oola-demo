@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/hooks/use-auth"
+import { SellerRegistrationForm } from "@/components/seller-registration-form"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -11,6 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [showSellerForm, setShowSellerForm] = useState(false)
 
   // Auto-redirect if already logged in
   useEffect(() => {
@@ -157,7 +159,28 @@ export default function LoginPage() {
         <p className="text-center text-sm text-[rgb(var(--muted-foreground))] mt-6">
           عند إنشاء حساب جديد، ستحصل على دور بائع تلقائيا
         </p>
+
+        {/* Join as Seller Section */}
+        <div className="mt-8 pt-8 border-t border-[rgb(var(--border))]">
+          <div className="text-center">
+            <p className="text-sm text-[rgb(var(--muted-foreground))] mb-4">
+              هل لديك منتجات للبيع؟
+            </p>
+            <button
+              onClick={() => setShowSellerForm(true)}
+              className="btn-primary w-full"
+            >
+              انضم كبائع
+            </button>
+          </div>
+        </div>
       </main>
+
+      {/* Seller Registration Modal */}
+      <SellerRegistrationForm
+        isOpen={showSellerForm}
+        onClose={() => setShowSellerForm(false)}
+      />
     </div>
   )
 }
