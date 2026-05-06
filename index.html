@@ -50,6 +50,142 @@
     @media(min-width:480px){ .actions { flex-direction:row; } }  
     .error { color:#ffb3b3; }  
     .ok { color:#bff0b3; }  
+    
+    /* Seller Button */
+    .seller-btn {
+      background: linear-gradient(135deg, #d4af37 0%, #b8962e 100%);
+      color: #000;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+    .seller-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    }
+    
+    /* Modal Overlay */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    /* Modal Content */
+    .modal-content {
+      background: #1a1a1a;
+      border: 2px solid #d4af37;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 450px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+    }
+    .modal-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .modal-header h2 {
+      color: #d4af37;
+      margin: 0 0 10px 0;
+      font-size: 24px;
+    }
+    .modal-header p {
+      color: #bbb;
+      margin: 0;
+      font-size: 14px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 24px;
+      cursor: pointer;
+      width: auto;
+      padding: 5px;
+      transition: color 0.2s;
+    }
+    .modal-close:hover {
+      color: #d4af37;
+    }
+    
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      color: #d4af37;
+      font-size: 14px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .form-group input {
+      background: #0f0f0f;
+      border: 1px solid #333;
+      color: white;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+    .form-group input::placeholder {
+      color: #666;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #d4af37 0%, #b8962e 100%);
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .submit-btn:hover:not(:disabled) {
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .form-message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .form-message.success {
+      color: #bff0b3;
+    }
+    .form-message.error {
+      color: #ffb3b3;
+    }
   </style>  
 </head>  
 <body>  
@@ -72,11 +208,46 @@
   <div id="message" class="muted" role="status" aria-live="polite"></div>  
 </div>  
 
+<hr>
+
+<h2>🛍️ انضم كبائع</h2>
+<div class="card">
+  <p class="muted">هل أنت فنان أو علامة تجارية؟ انضم إلى منصتنا وابدأ ببيع أعمالك الفنية.</p>
+  <button class="seller-btn" id="joinSellerBtn">انضم كبائع</button>
+</div>
+
 <hr>  
 
 <h2>👩‍🎨 Artists</h2>  
 <div id="artists"></div>
 
+  </div>
+
+  <!-- Seller Registration Modal -->
+  <div class="modal-overlay" id="sellerModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal" aria-label="إغلاق">&times;</button>
+      <div class="modal-header">
+        <h2>📝 تسجيل كبائع</h2>
+        <p>أدخل بياناتك للانضمام إلى منصة Oola</p>
+      </div>
+      <form id="sellerForm">
+        <div class="form-group">
+          <label for="fullName">الاسم الكامل</label>
+          <input type="text" id="fullName" placeholder="أدخل اسمك الكامل" required>
+        </div>
+        <div class="form-group">
+          <label for="brandName">اسم العلامة التجارية / البراند</label>
+          <input type="text" id="brandName" placeholder="أدخل اسم علامتك التجارية" required>
+        </div>
+        <div class="form-group">
+          <label for="whatsapp">رقم الواتساب</label>
+          <input type="tel" id="whatsapp" placeholder="مثال: 966501234567" required dir="ltr">
+        </div>
+        <button type="submit" class="submit-btn" id="submitSellerBtn">إرسال الطلب</button>
+      </form>
+      <div class="form-message" id="formMessage"></div>
+    </div>
   </div>    <script type="module">  
     (async () => {  
       // --- Config (verify storageBucket in console if you use storage) ---  
@@ -174,7 +345,7 @@
   
         const { initializeApp } = appMod;  
         const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } = authMod;  
-        const { getFirestore, collection, onSnapshot, query, orderBy, limit } = firestoreMod;  
+        const { getFirestore, collection, onSnapshot, query, orderBy, limit, addDoc, serverTimestamp } = firestoreMod;  
   
         fbApp = initializeApp(firebaseConfig);  
         fbAuth = getAuth(fbApp);  
@@ -185,7 +356,8 @@
         impl.signup = async (email, password) => createUserWithEmailAndPassword(fbAuth, email, password);  
         impl.login = async (email, password) => signInWithEmailAndPassword(fbAuth, email, password);  
         impl.logout = async () => signOut(fbAuth);  
-        impl.onAuthChange = (cb) => onAuthStateChanged(fbAuth, cb);  
+        impl.onAuthChange = (cb) => onAuthStateChanged(fbAuth, cb);
+        impl.addSeller = async (data) => addDoc(collection(fbDb, 'sellers'), { ...data, createdAt: serverTimestamp() });  
   
         // artists subscribe with fallback if orderBy requires an index  
         impl.subscribeArtists = (onData, onError) => {  
@@ -236,7 +408,8 @@
           impl.signup = (email, password) => fbAuth.createUserWithEmailAndPassword(email, password);  
           impl.login = (email, password) => fbAuth.signInWithEmailAndPassword(email, password);  
           impl.logout = () => fbAuth.signOut();  
-          impl.onAuthChange = (cb) => fbAuth.onAuthStateChanged(cb);  
+          impl.onAuthChange = (cb) => fbAuth.onAuthStateChanged(cb);
+          impl.addSeller = (data) => fbDb.collection('sellers').add({ ...data, createdAt: firebase.firestore.FieldValue.serverTimestamp() });  
   
           impl.subscribeArtists = (onData, onError) => {  
             const baseCol = fbDb.collection('artists');  
@@ -367,7 +540,90 @@
         setTimeout(() => { showMessage(''); }, 5000);  
       }  
   
-      console.info('Initialization complete. If something still looks wrong, open the browser console (F12) and paste errors here.');  
+      console.info('Initialization complete. If something still looks wrong, open the browser console (F12) and paste errors here.');
+
+      // --- Seller Registration Modal Logic ---
+      const joinSellerBtn = document.getElementById('joinSellerBtn');
+      const sellerModal = document.getElementById('sellerModal');
+      const closeModalBtn = document.getElementById('closeModal');
+      const sellerForm = document.getElementById('sellerForm');
+      const formMessageEl = document.getElementById('formMessage');
+      const submitSellerBtn = document.getElementById('submitSellerBtn');
+
+      function openModal() {
+        sellerModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        sellerModal.classList.remove('active');
+        document.body.style.overflow = '';
+        sellerForm.reset();
+        formMessageEl.textContent = '';
+        formMessageEl.className = 'form-message';
+      }
+
+      function showFormMessage(text, isError = false) {
+        formMessageEl.textContent = text;
+        formMessageEl.className = isError ? 'form-message error' : 'form-message success';
+      }
+
+      joinSellerBtn.addEventListener('click', openModal);
+      closeModalBtn.addEventListener('click', closeModal);
+
+      // Close modal on overlay click
+      sellerModal.addEventListener('click', (e) => {
+        if (e.target === sellerModal) closeModal();
+      });
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sellerModal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Handle form submission
+      sellerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const fullName = document.getElementById('fullName').value.trim();
+        const brandName = document.getElementById('brandName').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+
+        // Validation
+        if (!fullName || !brandName || !whatsapp) {
+          showFormMessage('الرجاء ملء جميع الحقول', true);
+          return;
+        }
+
+        submitSellerBtn.disabled = true;
+        submitSellerBtn.textContent = 'جاري الإرسال...';
+
+        try {
+          await impl.addSeller({
+            fullName: fullName,
+            brandName: brandName,
+            whatsapp: whatsapp
+          });
+          
+          showFormMessage('تم تسجيل طلبك بنجاح! سنتواصل معك قريباً.', false);
+          sellerForm.reset();
+          
+          // Close modal after 2 seconds on success
+          setTimeout(() => {
+            closeModal();
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error adding seller:', error);
+          showFormMessage('حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.', true);
+        } finally {
+          submitSellerBtn.disabled = false;
+          submitSellerBtn.textContent = 'إرسال الطلب';
+        }
+      });
+
     })();  
   </script>  </body>  
 </html>  
